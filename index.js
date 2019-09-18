@@ -187,7 +187,6 @@ class SwipeAbleDrawer extends Component {
             height:this.state.dims.height,
             transform: [{translateX}, {scale}]
           },
-            styles.shadow,
             this.props.frontStyle]
           }
         >
@@ -224,16 +223,6 @@ const styles = StyleSheet.create({
     height,
     backgroundColor: "transparent"
   },
-  shadow: {
-    shadowOffset: {
-      width: -10,
-      height: 0,
-    },
-    shadowColor: 'rgba(0,0,0,0.8)',
-    shadowOpacity: 1,
-    shadowRadius: 19,
-    left: 0
-  }
 });
 
 const floatRange = (props, propName, componentName) => {
