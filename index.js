@@ -188,6 +188,8 @@ class SwipeAbleDrawer extends Component {
           style={[styles.front, {
             height: this.state.dims.height,
             borderRadius: 15,
+            paddingLeft: Platform.OS === 'android' && this.state.isOpen ? 13 : 0,
+            paddingBottom: Platform.OS === 'android' && this.state.isOpen ? 5 : 0,
             transform: [{ translateX }, { scale }]
           },
           this.props.frontStyle
@@ -248,8 +250,6 @@ const styles = StyleSheet.create({
   front: {
     backgroundColor: "white",
     zIndex: 3,
-    paddingLeft: Platform.OS === 'ios' ? 0 : 13,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 5,
   },
   mask: {
     position: "absolute",
