@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -6,9 +6,10 @@ import {
   Animated,
   PanResponder,
   Dimensions,
-  Easing
+  Easing,
+  Platform
 } from 'react-native';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class SwipeAbleDrawer extends Component {
   static defaultProps = {
@@ -23,15 +24,15 @@ class SwipeAbleDrawer extends Component {
       isOpen: false,
       dims: Dimensions.get("window"),
     };
-    if(this.props.position==='right'){
-      this.isPositionRight= true
-    }else if (this.props.position==='left'){
-      this.isPositionRight= false
+    if (this.props.position === 'right') {
+      this.isPositionRight = true
+    } else if (this.props.position === 'left') {
+      this.isPositionRight = false
     }
     this.isBlockDrawer = false;
     this.translateX = 0;
     this.scale = 1;
-    this.maxTranslateXValue = (-1)**this.isPositionRight * Math.ceil(this.state.dims.width * props.minimizeFactor);
+    this.maxTranslateXValue = (-1) ** this.isPositionRight * Math.ceil(this.state.dims.width * props.minimizeFactor);
     this.drawerAnimation = new Animated.Value(0);
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: this._onStartShouldSetPanResponder,
@@ -42,7 +43,7 @@ class SwipeAbleDrawer extends Component {
     Dimensions.addEventListener("change", this.dimhandler);
   }
 
-  dimhandler = dims => this.setState({dims: dims.window});
+  dimhandler = dims => this.setState({ dims: dims.window });
 
   blockSwipeAbleDrawer = (isBlock) => {
     this.isBlockDrawer = isBlock;
@@ -52,56 +53,56 @@ class SwipeAbleDrawer extends Component {
     if (this.state.isOpen) {
       this.scale = this.props.scalingFactor;
       this.translateX = this.maxTranslateXValue;
-      this.setState({isOpen: false}, () => {
+      this.setState({ isOpen: false }, () => {
         this.props.onClose && this.props.onClose();
         this.onDrawerAnimation()
       });
     }
   };
-  _onMoveShouldSetPanResponder = (e, {dx, dy, moveX}) => {
+  _onMoveShouldSetPanResponder = (e, { dx, dy, moveX }) => {
     if (!this.isBlockDrawer) {
-      if (this.isPositionRight){
+      if (this.isPositionRight) {
         return ((Math.abs(dx) > Math.abs(dy)
-          && dx < 20  && moveX > this.state.dims.width - this.props.swipeOffset) || this.state.isOpen);
-      }else{
+          && dx < 20 && moveX > this.state.dims.width - this.props.swipeOffset) || this.state.isOpen);
+      } else {
         return ((Math.abs(dx) > Math.abs(dy)
           && dx < 20 && moveX < this.props.swipeOffset) || this.state.isOpen);
       }
     }
     return false;
   };
-  _onPanResponderMove = (e, {dx}) => {
-    if (!this.state.isOpen){
-      if ((-1)**this.isPositionRight * dx < 0 ) return false;
-      if ( Math.abs(Math.round(dx)) < Math.abs(this.maxTranslateXValue)) {
+  _onPanResponderMove = (e, { dx }) => {
+    if (!this.state.isOpen) {
+      if ((-1) ** this.isPositionRight * dx < 0) return false;
+      if (Math.abs(Math.round(dx)) < Math.abs(this.maxTranslateXValue)) {
         this.translateX = Math.round(dx);
-        this.scale = 1 - ((this.translateX  * (1 - this.props.scalingFactor)) / this.maxTranslateXValue);
+        this.scale = 1 - ((this.translateX * (1 - this.props.scalingFactor)) / this.maxTranslateXValue);
 
         this.frontRef.setNativeProps({
           style: {
-            transform: [{translateX: this.translateX},
-              {scale: this.scale}],
+            transform: [{ translateX: this.translateX },
+            { scale: this.scale }],
             opacity: this.opacity
           }
         });
         Animated.event([
-          null, {dx: this.drawerAnimation}
+          null, { dx: this.drawerAnimation }
         ]);
       }
     }
   };
 
-  _onPanResponderRelease = (e, {dx}) => {
-    if ((-1)**this.isPositionRight *dx < 0 && !this.state.isOpen) return false;
-    if ((-1)**this.isPositionRight * dx > this.state.dims.width * 0.1) {
-      this.setState({isOpen: true}, () => {
+  _onPanResponderRelease = (e, { dx }) => {
+    if ((-1) ** this.isPositionRight * dx < 0 && !this.state.isOpen) return false;
+    if ((-1) ** this.isPositionRight * dx > this.state.dims.width * 0.1) {
+      this.setState({ isOpen: true }, () => {
         this.scale = this.props.scalingFactor;
         this.translateX = this.maxTranslateXValue;
         this.props.onOpen && this.props.onOpen();
       });
       this.onDrawerAnimation();
     } else {
-      this.setState({isOpen: false}, () => {
+      this.setState({ isOpen: false }, () => {
         this.scale = 1;
         this.translateX = 0;
         this.props.onClose && this.props.onClose();
@@ -137,8 +138,7 @@ class SwipeAbleDrawer extends Component {
           extrapolate: 'clamp'
         })
       }
-      :
-      {
+      : {
         translateX: this.drawerAnimation.interpolate({
           inputRange: [0, 1],
           outputRange: [this.translateX, 0],
@@ -155,7 +155,7 @@ class SwipeAbleDrawer extends Component {
   close = () => {
     this.scale = this.props.scalingFactor;
     this.translateX = this.maxTranslateXValue;
-    this.setState({isOpen: false}, () => {
+    this.setState({ isOpen: false }, () => {
       this.onDrawerAnimation();
       this.props.onClose && this.props.onClose();
     });
@@ -164,7 +164,7 @@ class SwipeAbleDrawer extends Component {
   open = () => {
     this.scale = 1;
     this.translateX = 0;
-    this.setState({isOpen: true}, () => {
+    this.setState({ isOpen: true }, () => {
       this.props.onOpen && this.props.onOpen();
       this.onDrawerAnimation()
     })
@@ -176,6 +176,8 @@ class SwipeAbleDrawer extends Component {
 
   render() {
     const translateX = this.animationInterpolate().translateX;
+    const firstTranslateX = this.animationInterpolate().translateX;
+    const secondTranslateX = this.animationInterpolate().translateX;
     const scale = this.animationInterpolate().scale;
 
     return (
@@ -184,16 +186,47 @@ class SwipeAbleDrawer extends Component {
           {...this.panResponder.panHandlers}
           ref={ref => this.frontRef = ref}
           style={[styles.front, {
-            height:this.state.dims.height,
-            transform: [{translateX}, {scale}]
+            height: this.state.dims.height,
+            borderRadius: 15,
+            transform: [{ translateX }, { scale }]
           },
-            this.props.frontStyle]
+          this.props.frontStyle
+          ]
           }
         >
           {this.props.children}
-          {this.state.isOpen && <View style={styles.mask}/>}
+          {this.state.isOpen && <View style={styles.mask} />}
         </Animated.View>
-        <View style={[styles.drawer, this.props.contentWrapperStyle,{height:this.state.dims.height, width: this.state.dims.width}]}>
+
+        <Animated.View
+          style={[styles.front, {
+            backgroundColor: 'white',
+            height: this.state.dims.height - 80,
+            width: 1000,
+            position: 'absolute',
+            zIndex: 2,
+            left: -105,
+            top: 40,
+            opacity: 0.5,
+            borderRadius: 15,
+            transform: [{ translateX: firstTranslateX }, { scale }]
+          }]}
+        />
+        <Animated.View
+          style={[styles.front, {
+            backgroundColor: 'white',
+            height: this.state.dims.height - 160,
+            width: 1000,
+            position: 'absolute',
+            zIndex: 2,
+            left: -115,
+            top: 80,
+            opacity: 0.2,
+            borderRadius: 15,
+            transform: [{ translateX: secondTranslateX }, { scale }]
+          }]}
+        />
+        <View style={[styles.drawer, this.props.contentWrapperStyle, { height: this.state.dims.height, width: this.state.dims.width }]}>
           {this.props.content}
         </View>
       </View>
@@ -205,6 +238,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#dedede',
+    borderRadius: 15
   },
   drawer: {
     position: "absolute",
@@ -213,7 +247,9 @@ const styles = StyleSheet.create({
   },
   front: {
     backgroundColor: "white",
-    zIndex: 2
+    zIndex: 3,
+    paddingLeft: Platform.OS === 'ios' ? 0 : 13,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 5,
   },
   mask: {
     position: "absolute",
@@ -240,9 +276,8 @@ SwipeAbleDrawer.propTypes = {
   position: PropTypes.oneOf(['right', 'left']),
   contentWrapperStyle: PropTypes.object,
   frontStyle: PropTypes.object,
-  content: PropTypes.element
 };
 SwipeAbleDrawer.defaultProps = {
-  position:'left'
+  position: 'left'
 };
 export default SwipeAbleDrawer;
