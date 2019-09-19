@@ -207,7 +207,7 @@ class SwipeAbleDrawer extends Component {
             width: 1000,
             position: 'absolute',
             zIndex: 2,
-            left: -105,
+            left: -135,
             top: 40,
             opacity: 0.5,
             borderRadius: 15,
@@ -221,7 +221,7 @@ class SwipeAbleDrawer extends Component {
             width: 1000,
             position: 'absolute',
             zIndex: 2,
-            left: -115,
+            left: -145,
             top: 80,
             opacity: 0.2,
             borderRadius: 15,
@@ -281,3 +281,4 @@ SwipeAbleDrawer.defaultProps = {
   position: 'left'
 };
 export default SwipeAbleDrawer;
+
