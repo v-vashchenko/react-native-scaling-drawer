@@ -191,7 +191,7 @@ class SwipeAbleDrawer extends Component {
             paddingLeft: Platform.OS === 'android' && this.state.isOpen ? 13 : 0,
             paddingBottom: Platform.OS === 'android' && this.state.isOpen ? 5 : 0,
             transform: [{ translateX }, { scale }],
-            marginTop: this.state.isOpen ? 70 : 0
+            marginTop: this.state.isOpen ? 70 : 0,
           },
           this.props.frontStyle
           ]
@@ -204,12 +204,12 @@ class SwipeAbleDrawer extends Component {
         <Animated.View
           style={[styles.front, {
             backgroundColor: 'white',
-            height: this.state.dims.height - 80,
-            width: 1000,
-            position: 'absolute',
+            height: this.state.dims.height - 50,
             zIndex: 2,
-            left: -135,
-            top: 40,
+            width: (this.state.dims.width) * this.props.scalingFactor,
+            position: 'absolute',
+            top: (this.state.dims.height ** this.props.minimizeFactor - 5),
+            left: (this.state.dims.width * this.props.scalingFactor) / 10,
             opacity: 0.5,
             borderRadius: 15,
             transform: [{ translateX: firstTranslateX }, { scale }],
@@ -219,12 +219,12 @@ class SwipeAbleDrawer extends Component {
         <Animated.View
           style={[styles.front, {
             backgroundColor: 'white',
-            height: this.state.dims.height - 160,
-            width: 1000,
-            position: 'absolute',
+            height: this.state.dims.height - 100,
             zIndex: 2,
-            left: -145,
-            top: 80,
+            width: (this.state.dims.width) * this.props.scalingFactor,
+            position: 'absolute',
+            top: (this.state.dims.height ** this.props.minimizeFactor + 20),
+            left: (this.state.dims.width * this.props.scalingFactor) / 14,
             opacity: 0.2,
             borderRadius: 15,
             transform: [{ translateX: secondTranslateX }, { scale }],
