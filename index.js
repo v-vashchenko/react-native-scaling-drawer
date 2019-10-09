@@ -201,36 +201,41 @@ class SwipeAbleDrawer extends Component {
           {this.state.isOpen && <View style={styles.mask} />}
         </Animated.View>
 
-        <Animated.View
-          style={[styles.front, {
-            backgroundColor: 'white',
-            height: this.state.dims.height - 50,
-            zIndex: 2,
-            width: (this.state.dims.width) * this.props.scalingFactor,
-            position: 'absolute',
-            top: (this.state.dims.height ** this.props.minimizeFactor - 5),
-            left: (this.state.dims.width * this.props.scalingFactor) / 10,
-            opacity: 0.5,
-            borderRadius: 15,
-            transform: [{ translateX: firstTranslateX }, { scale }],
-            marginTop: this.state.isOpen ? 70 : 0
-          }]}
-        />
-        <Animated.View
-          style={[styles.front, {
-            backgroundColor: 'white',
-            height: this.state.dims.height - 100,
-            zIndex: 2,
-            width: (this.state.dims.width) * this.props.scalingFactor,
-            position: 'absolute',
-            top: (this.state.dims.height ** this.props.minimizeFactor + 20),
-            left: (this.state.dims.width * this.props.scalingFactor) / 14,
-            opacity: 0.2,
-            borderRadius: 15,
-            transform: [{ translateX: secondTranslateX }, { scale }],
-            marginTop: this.state.isOpen ? 70 : 0
-          }]}
-        />
+        {
+          this.state.isOpen &&
+          <>
+            <Animated.View
+              style={[styles.front, {
+                backgroundColor: 'white',
+                height: this.state.dims.height - 50,
+                zIndex: 2,
+                width: (this.state.dims.width) * this.props.scalingFactor,
+                position: 'absolute',
+                top: (this.state.dims.height ** this.props.minimizeFactor - 5),
+                left: (this.state.dims.width * this.props.scalingFactor) / 10,
+                opacity: 0.5,
+                borderRadius: 15,
+                transform: [{ translateX: firstTranslateX }, { scale }],
+                marginTop: this.state.isOpen ? 70 : 0
+              }]}
+            />
+            <Animated.View
+              style={[styles.front, {
+                backgroundColor: 'white',
+                height: this.state.dims.height - 100,
+                zIndex: 2,
+                width: (this.state.dims.width) * this.props.scalingFactor,
+                position: 'absolute',
+                top: (this.state.dims.height ** this.props.minimizeFactor + 20),
+                left: (this.state.dims.width * this.props.scalingFactor) / 14,
+                opacity: 0.2,
+                borderRadius: 15,
+                transform: [{ translateX: secondTranslateX }, { scale }],
+                marginTop: this.state.isOpen ? 70 : 0
+              }]}
+            />
+          </>
+        }
         <View style={[styles.drawer, this.props.contentWrapperStyle, { height: this.state.dims.height, width: this.state.dims.width }]}>
           {this.props.content}
         </View>
