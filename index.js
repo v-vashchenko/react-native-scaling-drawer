@@ -118,7 +118,9 @@ class SwipeAbleDrawer extends Component {
           ref={ref => this.frontRef = ref}
           style={[styles.front, {
             height,
-            borderRadius: 15,
+            borderTopLeftRadius: 25,
+            borderBottomLeftRadius: 25,
+            marginLeft: this.state.isOpen ? 0 : -25,
             paddingLeft: Platform.OS === 'android' && this.state.isOpen ? 13 : 0,
             paddingBottom: Platform.OS === 'android' && this.state.isOpen ? 5 : 0,
             transform: [{ translateX }, { scale }],
@@ -181,7 +183,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#dedede',
-    borderRadius: 15
   },
   drawer: {
     position: "absolute",
