@@ -51,7 +51,7 @@ class SwipeAbleDrawer extends Component {
       this.drawerAnimation,
       {
         toValue: 1,
-        duration: 500,
+        duration: 600,
         useNativeDriver: true,
       }
     ).start();
