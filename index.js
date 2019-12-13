@@ -124,7 +124,6 @@ class SwipeAbleDrawer extends Component {
             paddingLeft: Platform.OS === 'android' && this.state.isOpen ? 13 : 0,
             paddingBottom: Platform.OS === 'android' && this.state.isOpen ? 5 : 0,
             transform: [{ translateX }, { scale }],
-            marginTop: this.state.isOpen ? 70 : 0,
           },
           this.props.frontStyle
           ]
@@ -147,11 +146,10 @@ class SwipeAbleDrawer extends Component {
                 width: width * this.props.scalingFactor,
                 position: 'absolute',
                 top: height ** this.props.minimizeFactor - 5,
-                left: width * this.props.scalingFactor / 10,
+                left: width * this.props.scalingFactor / 3.5,
                 opacity: 0.5,
                 borderRadius: 15,
                 transform: [{ translateX }, { scale }],
-                marginTop: this.state.isOpen ? 70 : 0
               }]}
             />
             <Animated.View
@@ -162,11 +160,10 @@ class SwipeAbleDrawer extends Component {
                 width: width * this.props.scalingFactor,
                 position: 'absolute',
                 top: height ** this.props.minimizeFactor + 20,
-                left: width * this.props.scalingFactor / 14,
+                left: width * this.props.scalingFactor / 4.5,
                 opacity: 0.2,
                 borderRadius: 15,
                 transform: [{ translateX }, { scale }],
-                marginTop: this.state.isOpen ? 70 : 0
               }]}
             />
           </>
